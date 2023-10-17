@@ -8,7 +8,7 @@ const authorization = (req, res, next) => {
     try {
         const data = jwt.verify(token, "ECOMMERCE_SECRET_KEY");
         req.userEmail = data.email;
-        req.userPassword = data.password;
+        req.userRol = data.rol;
         return next();
     } catch {
         return res.sendStatus(403);
