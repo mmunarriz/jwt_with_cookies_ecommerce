@@ -76,10 +76,26 @@ router.get("/protected", requireAuth, (req, res) => {
 });
 
 router.get("/logout", requireAuth, (req, res) => {
-    return res
-        .clearCookie("access_token")
-        .status(200)
-        .json({ message: "Successfully logged out" });
+    // Accede al ID de la sesión desde la sesión actual
+    const sessionId = req.sessionID;
+
+    // Destruye la sesión actual en la base de datos MongoDB Atlas
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session in MongoDB:', err);
+            return res.status(500).json({ message: "Internal server error" });
+        }
+
+        // Elimina la cookie con el token JWT
+        res.clearCookie("access_token");
+
+        // Elimina la cookie "connect.sid"
+        res.clearCookie("connect.sid");
+
+        // Respuesta exitosa
+        return res.status(200).json({ message: "Successfully logged out" });
+    });
 });
+
 
 export default router;
