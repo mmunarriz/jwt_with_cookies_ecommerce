@@ -10,6 +10,37 @@ router.get("/", (req, res) => {
     return res.json({ message: "Hello World" });
 });
 
+router.post('/register', async (req, res) => {
+    try {
+        const { first_name, last_name, email, age, password } = req.body;
+
+        // Verifica los campos obligatorios en la solicitud.
+        if (!first_name || !last_name || !email || !password) {
+            return res.status(400).json({ status: "error", error: "Missing required fields" });
+        }
+
+        // Verifica si el "email" ya existe en la DB
+        const exists = await userModel.findOne({ email });
+        if (exists) {
+            return res.status(400).json({ status: "error", error: "User already exists" });
+        }
+
+        // Crea el usuario en la DB
+        const user = {
+            first_name,
+            last_name,
+            email,
+            age,
+            password: createHash(password)
+        }
+        const result = await userModel.create(user);
+        return res.status(200).json({ status: "success", message: "User registered" });
+    } catch (error) {
+        console.error("User registration error:", error);
+        return res.status(500).json({ status: "error", error: "Internal Server Error" });
+    }
+});
+
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
