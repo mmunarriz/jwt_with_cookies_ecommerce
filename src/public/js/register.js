@@ -16,20 +16,22 @@ form.addEventListener('submit', e => {
             if (response.status === 200) {
                 return response.json();
             } else {
-                console.error('Error en el registro');
+                return response.json().then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        console.error('User registration error');
+                    }
+                });
             }
         })
         .then(data => {
             if (data.status === "success") {
-                // Muestra un mensaje de confirmación de registro
-                alert("Usuario registrado correctamente");
-                // Redirigir al login
+                alert("Successfully registered user");
                 window.location.href = '/login';
             }
         })
         .catch(error => {
-            console.error('Error en la solicitud:', error);
+            console.error('Request error:', error);
         });
-
-
-})
+});

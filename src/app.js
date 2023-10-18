@@ -7,6 +7,7 @@ import __dirname from './utils.js';
 import cookieParser from 'cookie-parser';
 import config from './config/config.js';
 import sessionsRouter from './routes/sessions.js';
+import viewsRouter from './routes/views.js';
 
 
 const urlMongo = config.mongoUrl
@@ -35,6 +36,11 @@ app.engine('handlebars', handlebars.engine());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'handlebars');
 
-app.use('/', sessionsRouter);
+app.use('/', viewsRouter);
+app.use('/api/sessions', sessionsRouter);
+// catch all route
+app.get("*", (req, res) => {
+    res.send('Error 404 - Not Found');
+});
 
 const server = app.listen(PORT, () => console.log("Listening on port " + PORT))
