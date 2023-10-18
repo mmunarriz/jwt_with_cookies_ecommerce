@@ -3,6 +3,10 @@ import jwt from 'jsonwebtoken';
 import userModel from '../dao/models/users.js';
 import requireAuth from '../controllers/auth.js';
 import { createHash, isValidPassword } from '../utils.js'
+import config from '../config/config.js';
+
+const ADMIN_EMAIL = config.adminEmail
+const ADMIN_PASSWORD = config.adminPassword
 
 const router = Router();
 
@@ -41,7 +45,7 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     // Comprueba si los datos coinciden con estos.
-    if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
         // Inicia una sesión de usuario Administrador.
         req.session.user = {
             name: "Admin Coderhouse",

@@ -10,12 +10,12 @@ import sessionsRouter from './routes/sessions.js';
 import viewsRouter from './routes/views.js';
 
 
-const urlMongo = config.mongoUrl
+const MONGO_URL = config.mongoUrl
 const PORT = config.port
 
 const app = express();
 app.use(cookieParser());
-const connection = mongoose.connect(urlMongo, {
+const connection = mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'))
 app.use(session({
     store: new MongoStore({
-        mongoUrl: urlMongo,
+        mongoUrl: MONGO_URL,
         ttl: 3600
     }),
     secret: "3c0mm3rc3l0g1n",
