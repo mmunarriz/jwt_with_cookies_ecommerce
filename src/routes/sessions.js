@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
         }
         const userRole = "admin";
         // Genera un token JWT y establece la cookie.
-        const token = jwt.sign({ email, rol: userRole }, "ECOMMERCE_SECRET_KEY", {
+        const token = jwt.sign({ email, rol: userRole }, "t0k3nJwtS3cr3t", {
             expiresIn: '1h', // Tiempo de expiración de 1 hora
         });
 

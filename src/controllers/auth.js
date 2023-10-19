@@ -6,7 +6,7 @@ const authorization = (req, res, next) => {
         return res.redirect('/login');
     }
     try {
-        const data = jwt.verify(token, "ECOMMERCE_SECRET_KEY");
+        const data = jwt.verify(token, "t0k3nJwtS3cr3t");
         req.userEmail = data.email;
         req.userRol = data.rol;
         return next();

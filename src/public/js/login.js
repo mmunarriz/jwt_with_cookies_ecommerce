@@ -16,6 +16,7 @@ form.addEventListener('submit', e => {
             window.location.replace('/products');
         }
         else {
+            alert("User login error");
             window.location.replace('/login');
         }
     })

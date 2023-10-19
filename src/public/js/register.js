@@ -19,6 +19,7 @@ form.addEventListener('submit', e => {
                 return response.json().then(data => {
                     if (data.error) {
                         alert(data.error);
+                        window.location.href = '/register';
                     } else {
                         console.error('User registration error');
                     }
