@@ -20,6 +20,7 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
+// Ruta requiere estar autenticado
 router.get("/logout", requireAuth, (req, res) => {
     // Accede al ID de la sesión desde la sesión actual
     const sessionId = req.sessionID;
@@ -43,12 +44,14 @@ router.get("/logout", requireAuth, (req, res) => {
     });
 });
 
+// Ruta de acceso libre
 router.get('/', (req, res) => {
     res.render('login', {
         user: req.session.user
     });
 })
 
+// Ruta de acceso libre
 router.get('/home', (req, res) => {
     res.render('home', {
         user: req.session.user
